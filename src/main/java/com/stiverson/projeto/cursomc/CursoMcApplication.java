@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.stiverson.projeto.cursomc.domain.Categoria;
 import com.stiverson.projeto.cursomc.domain.Cidade;
+import com.stiverson.projeto.cursomc.domain.Cliente;
+import com.stiverson.projeto.cursomc.domain.Endereco;
 import com.stiverson.projeto.cursomc.domain.Estado;
 import com.stiverson.projeto.cursomc.domain.Produto;
+import com.stiverson.projeto.cursomc.domain.enums.TipoCliente;
 import com.stiverson.projeto.cursomc.repositories.CategoriaRepository;
 import com.stiverson.projeto.cursomc.repositories.CidadeRepository;
+import com.stiverson.projeto.cursomc.repositories.ClienteRepository;
+import com.stiverson.projeto.cursomc.repositories.EnderecoRepository;
 import com.stiverson.projeto.cursomc.repositories.EstadoRepository;
 import com.stiverson.projeto.cursomc.repositories.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -68,6 +79,27 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		
+		Cliente cli1 = new Cliente(null,"Stiverson Machado","Stiverson.machado@gmail.com","36645955804",TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("19982273244","991970865"));
+		Endereco e1 = new Endereco(null, "Avenida Pompéia", "2940", "Apto101 bl 05", "NovaPompéia", "13425620", cli1, c1);
+		cli1.getEnderecos().addAll(Arrays.asList(e1));
+		
+		
+		Cliente cli2 = new Cliente(null,"Alberto Dumbledore","RufricBryan@gmail.com","4846646849848484",TipoCliente.PESSOAJURIDICA);
+		cli2.getTelefones().addAll(Arrays.asList("8454114198456231","5184815154448"));
+		Endereco e2 = new Endereco(null, "Howgrats sala 12", "8945", "Ala 28", "hogmead", "14852479", cli2, c2);
+		cli2.getEnderecos().addAll(Arrays.asList(e2));
+		
+		Cliente cli3 = new Cliente(null,"Snow the boss","bletsnowcat@gmail.com","154484845548458",TipoCliente.PESSOAFISICA);
+		cli3.getTelefones().addAll(Arrays.asList("895541441156","56589484156"));
+		Endereco e3 = new Endereco(null, "Avenida Pompéia", "2940", "Apto101 bl 05", "NovaPompéia", "13425620", cli3, c1);
+		cli3.getEnderecos().addAll(Arrays.asList(e1));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1,cli2,cli3));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2,e3));
+		
 	}
 
 }
